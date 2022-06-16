@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Add Post
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'blog/add-post.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <section id="add-form">
+            <div id="saving-error">
+            {% if post_form.errors %}
+                <h2>Saving the comment failed!</h2>
+            {% endif %}
+            </div>
+        <form action="{% url 'add-post' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            {% for form_field in post_form %}
+            <div class="form-control">
+                {{ form_field.label_tag }}
+                {{ form_field }}
+                {{ form_field.errors }}
+            </div>
+            {% endfor %}
+            <button>Create</button>
+        </form>
+    </section>
+
+{% endblock %}
